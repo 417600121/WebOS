@@ -1,0 +1,41 @@
+body{
+    --radius: 1em;
+    --line-border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0;
+
+}
+*{
+    color: azure;
+    margin-bottom: 0;
+}
+
+
+.mohu{
+    /* position: relative; */
+    --alpha: .3;
+    backdrop-filter: blur(16px) saturate(150%);
+    background-color: rgba(0, 0, 0, var(--alpha));
+}
+.mohu-hover{
+    transition: all .2s ease-in-out;
+    background-color: rgba(222, 222, 222, 0.3) !important;
+}
+
+.mohu-hover:active,
+.task-itemFocus{
+    background-color: rgba(222, 222, 222, 0.4) !important;
+}
+
+
+.l-radius{
+    border-radius: var(--radius);
+}
+
+
+li{
+    list-style: none;
+}
+ul{
+    padding: 0 !important;
+    margin: 0 !important;
+}
