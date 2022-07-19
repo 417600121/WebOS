@@ -33,7 +33,7 @@ export default {
     },
     methods: {
         updateFocus(frame,i){
-            this.$bus.$emit('onTop',frame);
+            this.$bus.$emit('updateFocus',frame);
         }
     },
     mounted() {

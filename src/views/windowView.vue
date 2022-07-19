@@ -1,15 +1,20 @@
 <template>
-    <div id="windowView">
-        <ll-frame
-            v-for="frame in now_frames"
-            :key="frame.id"
-            @getFocus="getFocus"
-            @close="close"
-            :info="frame">
-            <div slot="content">
-                <component :is="frame.content.default"></component>
-            </div>
-        </ll-frame>
+    <div id="windowView" class="animate">
+        <transition-group enter-active-class="animate__animated animate__zoomIn" leave-active-class="animate__animated animate__zoomOut">
+            <ll-frame
+                v-for="(frame) in now_frames"
+                :key="frame.id"
+                @getFocus="getFocus"
+                @close="close"
+                @hide="hide"
+                :ref="frame.runToken"
+                v-show="frame.isShow"
+                :info="frame">
+                <div slot="content">
+                    <component :is="frame.content.default"></component>
+                </div>
+            </ll-frame>
+        </transition-group>
     </div>
 </template>
 
@@ -17,6 +22,8 @@
 import Vue from 'vue'
 import llFrame from '@/components/frames/FrameDefault.vue'
 import frames from '@/plugins/frames.js'
+import {getGuid} from '@/plugins/utils.js'
+import 'animate.css'
 export default {
     
     components: {
@@ -43,16 +50,22 @@ export default {
                 ...frameObject,
                 z: this.getMaxFrameIndex() + 1, //层级
                 focus: false, //是否获取焦点
+                runToken: getGuid()
             })
             this.setFrameFocus(frameObject)
             this.setTaskFocusByidx(this.now_frames.length-1)
         },
         // 将窗口置顶层
         onTop(frameObject){
-            if(frameObject.z == this.getMaxFrameIndex())return;
-            this.setFrameFocus(frameObject)
-            let idx = this.now_frames.findIndex(item => item.id == frameObject.id);
+            // if(frameObject.z == this.getMaxFrameIndex())return;
+            let idx = this.now_frames.findIndex(item => item.runToken == frameObject.runToken);
+            
+
+            console.log('onTop',idx);
+            this.setFrameShowByidx(idx);
             this.setTaskFocusByidx(idx);
+            this.setFrameFocus(frameObject)
+            
             this.now_frames[idx].z = this.getMaxFrameIndex() + 1;
             //当达到最大层级时，将所有窗口重置层级
             if(this.now_frames[idx].z > this.maxIndex){
@@ -62,29 +75,40 @@ export default {
                     item.z = this.minIndex + t;
                 })
             }
-
         },
         getFocus(frameObject){
             this.onTop(frameObject)
+            this.$refs[frameObject.runToken][0].$el.focus()
             // console.log(frameObject.title + ' 窗口获得了焦点')
         },
         setTaskFocusByidx(idx){
             this.$store.commit('setTaskFocusByidx', idx);
         },
         setFrameFocus(frameObject){
+            if(frameObject.runToken in this.$refs){
+                console.log(11);
+                this.$refs[frameObject.runToken][0].$el.focus();
+            }
             let idx = this.now_frames.findIndex(item => item.id == frameObject.id);
             this.now_frames.forEach(item => {
                 item.focus = false
             })
             this.now_frames[idx].focus = true;
         },
+        setFrameShowByidx(idx){
+            this.now_frames[idx].isShow = true;
+        },
         updateStore(){
             this.$store.commit('updateFrames', this.now_frames);
         },
-        close(info){
-            // console.log(info);
-            let idx = this.now_frames.findIndex(item => item.id == info.id);
+        close(frameInfo){
+            let idx = this.now_frames.findIndex(item => item.id == frameInfo.id);
             this.now_frames.splice(idx, 1);
+        },
+        hide(frameInfo){
+            let idx = this.now_frames.findIndex(item => item.runToken == frameInfo.runToken);
+            this.now_frames[idx].isShow = false;
+            frameInfo.focus = false
         }
     },
     watch:{
@@ -97,8 +121,14 @@ export default {
         }
     },
     mounted() {
-        this.$bus.$on('onTop', (frameObject)=>{
-            this.onTop(frameObject);
+        this.$bus.$on('updateFocus', (frameObject)=>{
+            if(frameObject.focus===false){
+                this.onTop(frameObject)
+                frameObject.isShow = true;
+            }else{
+                frameObject.isShow = false;
+                frameObject.focus = false;
+            }
         });
         this.startFrame(frames[0])
         this.startFrame(frames[1])
@@ -118,5 +148,9 @@ export default {
         display: inline-block;
         width: 150px;
         height: 150px;
+    }
+
+    .animate{
+        --animate-duration: .3s;
     }
 </style>

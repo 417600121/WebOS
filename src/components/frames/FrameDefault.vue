@@ -3,6 +3,7 @@
         ref="frame"
         v-drag="'.title-wrapper'"
         tabindex="111"
+        :class="[info.focus?'focus':'']"
         :style="{
             width: info.width,
             height: info.height,
@@ -10,19 +11,19 @@
         }">
         <div class="title">
             <!-- v-focus="'focus'" -->
-            <div v-if="info.isShowTitle" class="title-wrapper">
+            <div v-if="info.isShowTitle" class="title-wrapper" ref="title-wrapper">
                 {{info.title}}
             </div>
             <div class="options">
                 <template>
                     <slot name="options"></slot>
                 </template>
-                <button class="lbtn"><i class="iconfont icon-2zuixiaohua-2"></i></button>
-                <button class="lbtn"><i class="iconfont icon-3zuidahua-1"></i></button>
-                <button class="lbtn danger" @click="close"><i class="iconfont icon-4guanbi-2"></i></button>
+                <button class="lbtn" @click.prevent.stop="hide"><i class="iconfont icon-2zuixiaohua-2"></i></button>
+                <button class="lbtn" ><i class="iconfont icon-3zuidahua-1"></i></button>
+                <button class="lbtn danger" @click.stop="close"><i class="iconfont icon-4guanbi-2"></i></button>
             </div>
         </div>
-        <div class="content">
+        <div class="content" ref="content">
             <slot name="content"></slot>
         </div>
     </div>
@@ -61,6 +62,9 @@ export default {
         },
         close(){
             this.$emit('close', this.info)
+        },
+        hide(){
+            this.$emit('hide', this.info)
         }
     },
     watch:{
@@ -72,9 +76,18 @@ export default {
         }
     },
     mounted() {
-        this.$refs['frame'].addEventListener('mousedown',()=>{
+        // this.$refs['frame'].addEventListener('mousedown',()=>{
+        //     this.getFocus();
+        // })
+
+        this.$refs['title-wrapper'].addEventListener('mousedown',()=>{
             this.getFocus();
         })
+
+        this.$refs['content'].addEventListener('mousedown',()=>{
+            this.getFocus();
+        })
+        
         // this.frame_style.width = this.frame_info.width;
         // this.frame_style.height = this.frame_info.height;
         // this.frame_style.backgroundColor = this.frame_info.titleBkgColor;
@@ -93,11 +106,17 @@ export default {
         color: #000;
         outline: 1px solid rgba(61, 61, 61, 0.607);
         box-shadow: 0 0 10px rgba(61, 61, 61, 0.607);
+        display: flex;
+        flex-direction: column;
     }
 
     /* 使用 focus-within代替focus，从而使得子元素获得焦点时也会触发该样式*/
-    .frame:focus-within{
+    .frame:focus-within,
+    .frame.focus{
         outline: 1px solid red;
+    }
+    .frame>.content{
+        flex-grow: 1;
     }
     .title{
         background: #e9e9e9;
@@ -108,8 +127,10 @@ export default {
         justify-content: space-between;
         position: relative;
         opacity: .4;
+        flex-shrink: 0;
     }
-    .frame:focus-within .title{
+    .frame:focus-within .title,
+    .frame.focus .title{
         opacity: 1;
     }
     .title-wrapper{
