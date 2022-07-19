@@ -1,19 +1,15 @@
-# llbfos
+# WebOS
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+This is a homemade WebOS,if like it,please star it.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+And if you want to contribute,please fork it.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+I will update it as soon as possible.
+
+[]: # Language: vue
+[]: # Path: README.md
+
+This is a beta.
+
+![image-20220719091438656](D:\vue项目\llbfos\README\image-20220719091438656.png)
