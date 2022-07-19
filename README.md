@@ -1,7 +1,7 @@
 # WebOS
 
 
-This is a homemade WebOS,if like it,please star it.
+This is a homemade WebOS,if you like it,please star it.
 
 And if you want to contribute,please fork it.
 
