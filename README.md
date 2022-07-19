@@ -12,4 +12,4 @@ I will update it as soon as possible.
 
 This is a beta.
 
-![image-20220719091438656](D:\vue项目\llbfos\README\image-20220719091438656.png)
+![image-20220719091438656](./README/image-20220719091438656.png)
