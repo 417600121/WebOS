@@ -25,8 +25,8 @@ export default [
     {
         id: '2',
         title: '窗口组件by石磊2',
-        width: '350px',
-        height: '200px',
+        width: '360px',
+        height: '300px',
         type:'light',
         startPos: 1,
         isShow: true,

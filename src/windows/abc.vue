@@ -1,6 +1,6 @@
 <template>
     <div>
-        大家好我是窗口2fa-rotate-270
+        <video src="./assets/video/82363459_nb2-1-80.mp4" autoplay controls="true" style="width: 100%;height: 280px;transform: translateY(-8px);" muted="true"></video>
     </div>
 </template>
 
