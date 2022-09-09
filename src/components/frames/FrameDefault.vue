@@ -163,12 +163,16 @@ export default {
         background: rgba(79, 79, 79, 0.15);
     }
     .options>.danger:hover{
-        background: rgba(211, 58, 58, 1);
+        background: #d41325;
     }
     .options>.danger:active{
         background: rgb(163, 16, 16);
     }
     .danger:hover i{
+        color: white !important;
+        transition: .3s;
+    }
+    .danger:active i{
         color: white !important;
     }
 

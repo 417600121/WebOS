@@ -13,5 +13,11 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      // contextmenu 禁用右键菜单
+      document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+      })
+    </script>
   </body>
 </html>
