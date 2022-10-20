@@ -87,6 +87,14 @@ export default {
         this.$refs['content'].addEventListener('mousedown',()=>{
             this.getFocus();
         })
+
+        this.$refs['title-wrapper'].addEventListener('touchstart',()=>{
+            this.getFocus();
+        })
+
+        this.$refs['content'].addEventListener('touchstart',()=>{
+            this.getFocus();
+        })
         
         // this.frame_style.width = this.frame_info.width;
         // this.frame_style.height = this.frame_info.height;
