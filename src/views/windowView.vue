@@ -228,6 +228,7 @@ export default {
 
         display: flex;
         align-items:center;
+        user-select: none;
     }
     .v-contextmenu-item i{
         margin-right: .5rem;
