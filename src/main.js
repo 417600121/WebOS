@@ -23,7 +23,7 @@ Vue.use(IconsPlugin)
 //======================================================================
 
 import "zico/css/zico.min.css";
-// import "@/assets/iconfont/iconfont.css";
+import "@/assets/iconfont/iconfont.css";
 Vue.config.productionTip = false
 
 
