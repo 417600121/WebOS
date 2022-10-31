@@ -35,7 +35,7 @@ Vue.directive('drag',{
                 document.onmousemove = null;
                 document.onmouseup = null;
             }
-        })
+        }, {passive:false})
         
         // PE端
         dragBar.addEventListener('touchstart', (e) => {
@@ -51,7 +51,7 @@ Vue.directive('drag',{
                 document.ontouchmove = null;
                 document.ontouchend = null;
             }
-        })
+        }, {passive:false})
     }
 })
 
@@ -90,6 +90,6 @@ Vue.directive('focus',{
                     }
                 }
             }
-        })
+        },{passive:false})
     }
 })

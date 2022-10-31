@@ -90,11 +90,11 @@ export default {
 
         this.$refs['title-wrapper'].addEventListener('touchstart',()=>{
             this.getFocus();
-        })
+        },{passive:false})
 
         this.$refs['content'].addEventListener('touchstart',()=>{
             this.getFocus();
-        })
+        },{passive:false})
         
         // this.frame_style.width = this.frame_info.width;
         // this.frame_style.height = this.frame_info.height;

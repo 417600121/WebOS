@@ -92,7 +92,8 @@ export default {
 .TaskBar{
     width: 4em;
     overflow: hidden;
-    flex-shrink: 0;
+    /* position: absolute; */
+    z-index: 999999;
 }
 .MenuBar{
     width: 100%;

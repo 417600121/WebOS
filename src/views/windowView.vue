@@ -1,5 +1,5 @@
 <template>
-    <div id="windowView" class="animate">
+    <div id="windowView" class="animate" v-contextmenu>
         <transition-group enter-active-class="animate__animated animate__zoomIn" leave-active-class="animate__animated animate__zoomOut">
             <ll-frame
                 v-for="(frame) in now_frames"
@@ -15,6 +15,33 @@
                 </div>
             </ll-frame>
         </transition-group>
+
+
+        <v-contextmenu ref="contextmenu">
+            <v-contextmenu-item>
+                <i class="iconfont icon-icon-test1 fs-5"></i>刷新
+            </v-contextmenu-item>
+            <v-contextmenu-item>
+                
+                
+                <div v-if="!isFullScreen" @click="fullScreen">
+                    <i class="iconfont icon-full-screen" style="margin-left: .1rem;margin-right: .4rem;"></i>
+                    全屏
+                </div>
+                <div v-else @click="exitFullScreen">
+                    <i class="iconfont icon-full-screen" style="margin-left: .1rem;margin-right: .4rem;"></i>
+                    退出全屏
+                </div>
+            </v-contextmenu-item>
+            <v-contextmenu-item>
+                <i class="iconfont icon-icon-test fs-5"></i>设置
+            </v-contextmenu-item>
+            
+            <v-contextmenu-item>
+                <i class="iconfont icon-icon-test fs-5"></i>取消
+            </v-contextmenu-item>
+        </v-contextmenu>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
     </div>
 </template>
 
@@ -24,6 +51,7 @@ import llFrame from '@/components/frames/FrameDefault.vue'
 import frames from '@/plugins/frames.js'
 import {getGuid} from '@/plugins/utils.js'
 import 'animate.css'
+
 export default {
     
     components: {
@@ -34,6 +62,8 @@ export default {
             now_frames: [],
             minIndex: 100,
             maxIndex: 1000,
+
+            isFullScreen: false
         }
     },
     methods: {
@@ -109,6 +139,30 @@ export default {
             let idx = this.now_frames.findIndex(item => item.runToken == frameInfo.runToken);
             this.now_frames[idx].isShow = false;
             frameInfo.focus = false
+        },
+        fullScreen(){
+            const html = document.querySelector('html');
+            html.requestFullscreen()
+            .then(() => {
+                console.log('进入全屏成功')
+                this.isFullScreen = true
+            })
+            .catch(() => {
+                console.log('进入全屏失败')
+                this.isFullScreen = false
+            })
+        },
+        exitFullScreen(){
+            if(document.exitFullscreen) {
+                document.exitFullscreen().then();
+                this.isFullScreen = false
+            } else if(document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+                this.isFullScreen = false
+            } else if(document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+                this.isFullScreen = false
+            }
         }
     },
     watch:{
@@ -130,6 +184,7 @@ export default {
                 frameObject.focus = false;
             }
         });
+
         this.startFrame(frames[0])
         this.startFrame(frames[1])
         this.startFrame(frames[2])
@@ -152,5 +207,32 @@ export default {
 
     .animate{
         --animate-duration: .3s;
+    }
+
+    .v-contextmenu{
+        background: rgba(30,30,30,.6);
+        border: 1px solid rgba(185,185,185,.2);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 10px 30px rgb(0 0 0 / 50%);
+        padding: 5px !important;
+        border-radius: 10px;
+        min-width: 160px;
+
+    }
+    .v-contextmenu-item{
+        padding: 8px 15px !important;
+        height: 2rem;
+        color: white !important;
+        font-size: 14px !important;
+        border-radius: 5px;
+
+        display: flex;
+        align-items:center;
+    }
+    .v-contextmenu-item i{
+        margin-right: .5rem;
+    }
+    .v-contextmenu-item.v-contextmenu-item--hover{
+        background-color: rgba(100,100,100,.4);
     }
 </style>

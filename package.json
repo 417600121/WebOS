@@ -12,8 +12,10 @@
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.6.5",
     "floating-vue": "^1.0.0-beta.18",
+    "font-awesome": "^4.7.0",
     "vue": "^2.6.14",
     "vue-router": "^3.2.0",
+    "vue-runtime-helpers": "^1.1.2",
     "vuex": "^3.6.2",
     "zico": "^1.9.1"
   },
@@ -21,6 +23,7 @@
     "@vue/cli-plugin-babel": "~4.5.15",
     "@vue/cli-plugin-router": "~4.5.15",
     "@vue/cli-service": "~4.5.15",
+    "v-contextmenu": "^2.9.0",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [

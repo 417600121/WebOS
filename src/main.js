@@ -23,7 +23,7 @@ Vue.use(IconsPlugin)
 //======================================================================
 
 import "zico/css/zico.min.css";
-import "@/assets/iconfont/iconfont.css";
+// import "@/assets/iconfont/iconfont.css";
 Vue.config.productionTip = false
 
 
@@ -50,6 +50,11 @@ Vue.component('VTooltip', Tooltip)
 Vue.component('VMenu', Menu)
 import 'floating-vue/dist/style.css'
 //======================================================================
+import contentmenu from 'v-contextmenu'
+import 'v-contextmenu/dist/index.css'
+Vue.use(contentmenu)
+//======================================================================
+import 'font-awesome/css/font-awesome.css'
 
 
 
