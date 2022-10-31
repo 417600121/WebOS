@@ -1,5 +1,5 @@
 <template>
-    <div id="windowView" class="animate" v-contextmenu>
+    <div id="windowView" class="animate" v-contextmenu:contextmenu>
         <transition-group enter-active-class="animate__animated animate__zoomIn" leave-active-class="animate__animated animate__zoomOut">
             <ll-frame
                 v-for="(frame) in now_frames"
